@@ -5,6 +5,7 @@ import { useCalendarData } from "./useCalendarData";
 import CalendarGrid from "./CalendarGrid";
 import EventModal from "./EventModal";
 import SuggestionModal from "../Planner/SuggestionModal";
+import DailySuggestions from "../Suggestions/DailySuggestions";
 
 export default function TodayView() {
   const { settings } = usePlannerState();
@@ -40,6 +41,8 @@ export default function TodayView() {
           + Add event
         </button>
       </div>
+
+      <DailySuggestions />
 
       <CalendarGrid
         days={days}

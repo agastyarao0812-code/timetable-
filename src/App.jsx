@@ -4,6 +4,7 @@ import TodayView from "./components/Calendar/TodayView";
 import WeekView from "./components/Calendar/WeekView";
 import DeadlinesView from "./components/Deadlines/DeadlinesView";
 import PlannerView from "./components/Planner/PlannerView";
+import ChecklistView from "./components/Checklist/ChecklistView";
 import DeadlineBanner from "./components/Banner/DeadlineBanner";
 import { checkAndNotify } from "./lib/notifications";
 
@@ -12,6 +13,7 @@ const TABS = [
   { id: "week", label: "Week" },
   { id: "deadlines", label: "Deadlines" },
   { id: "planner", label: "Planner" },
+  { id: "checklist", label: "Checklist" },
 ];
 
 const NOTIFICATION_CHECK_INTERVAL_MS = 30 * 60 * 1000;
@@ -57,6 +59,7 @@ export default function App() {
         {tab === "week" && <WeekView />}
         {tab === "deadlines" && <DeadlinesView />}
         {tab === "planner" && <PlannerView />}
+        {tab === "checklist" && <ChecklistView />}
       </main>
     </div>
   );

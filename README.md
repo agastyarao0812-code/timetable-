@@ -9,7 +9,7 @@ This project is being built in stages. Current status:
 - [x] Stage 1: Weekly calendar + Today view, fixed events, recurring events
 - [x] Stage 2: Deadlines list + reminders
 - [x] Stage 3: Revision planner (subjects, auto-suggested study blocks)
-- [ ] Stage 4: Exercise/personal targets, daily suggestions, checklist
+- [x] Stage 4: Exercise/personal targets, daily suggestions, checklist
 - [ ] Stage 5: Outlook sync, JSON export/import, theming polish, GitHub Pages deploy
 
 ## Running it locally
@@ -76,6 +76,20 @@ Then open the URL it prints (usually http://localhost:5173).
   **Delete** (reject it).
 - Re-running **Suggest study blocks** replaces that week's un-accepted
   suggestions with a fresh batch — already-accepted blocks are left alone.
+
+## What to test right now (Stage 4)
+
+- On the **Planner** tab, use **Edit targets** to set weekly exercise and
+  personal/rest-time goals (how many times a week, how long each). Use
+  **+ Quick add** to schedule one in directly — it opens the normal event
+  form pre-filled with the right category and duration.
+- On the **Today** tab, check the **Today's tips** panel — it flags things
+  like an overloaded day, a deadline with too little time planned, or
+  missing exercise/rest time this week, based on simple rules over your
+  actual data (no AI involved).
+- On the **Checklist** tab, add tasks (optionally with a due date and a
+  link to an upcoming calendar event), tick them off, and watch the
+  "done this week" count and day streak update.
 
 ## Building for production
 
