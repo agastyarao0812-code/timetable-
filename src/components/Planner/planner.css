@@ -1,0 +1,160 @@
+.planner-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.planner-section h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.planner-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.log-date-input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 7px;
+  padding: 6px 8px;
+}
+
+.subject-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.subject-stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.subject-stat-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.86rem;
+}
+
+.subject-stat-name {
+  font-weight: 600;
+}
+
+.subject-deadline-pill {
+  background: var(--border-subtle);
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.subject-stat-hours {
+  margin-left: auto;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+}
+
+.progress-track {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--border-subtle);
+  overflow: hidden;
+}
+
+.progress-fill {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  border-radius: 999px;
+}
+
+.progress-fill-solid {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+}
+
+.subject-remaining {
+  font-size: 0.76rem;
+  color: var(--text-dim);
+}
+
+.log-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.log-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.log-name {
+  flex: 1;
+  font-size: 0.88rem;
+}
+
+.log-row .btn-ghost {
+  padding: 4px 10px;
+  line-height: 1;
+}
+
+.log-value {
+  min-width: 40px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.86rem;
+}
+
+.suggestion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.suggestion-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.suggestion-row-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 1px;
+}
+
+.suggestion-row-meta {
+  font-size: 0.76rem;
+  color: var(--text-dim);
+}
+
+@media (max-width: 640px) {
+  .subject-stat-hours {
+    margin-left: 0;
+    width: 100%;
+  }
+}

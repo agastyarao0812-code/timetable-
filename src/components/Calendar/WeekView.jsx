@@ -4,14 +4,24 @@ import { addDays, formatDate, formatMonthYear, getWeekDates } from "../../lib/da
 import { useCalendarData } from "./useCalendarData";
 import CalendarGrid from "./CalendarGrid";
 import EventModal from "./EventModal";
+import SuggestionModal from "../Planner/SuggestionModal";
 
 export default function WeekView() {
   const { settings } = usePlannerState();
   const [anchor, setAnchor] = useState(new Date());
   const [modalState, setModalState] = useState(null);
+  const [activeSuggestion, setActiveSuggestion] = useState(null);
 
   const days = useMemo(() => getWeekDates(anchor, settings.weekStartsOn), [anchor, settings.weekStartsOn]);
-  const { categoriesById, occurrencesByDate } = useCalendarData(days);
+  const { categoriesById, subjectsById, occurrencesByDate } = useCalendarData(days);
+
+  const handleEventClick = (occurrence) => {
+    if (occurrence.event.status === "suggested") {
+      setActiveSuggestion(occurrence);
+    } else {
+      setModalState({ mode: "edit", occurrence });
+    }
+  };
 
   return (
     <div className="view-pane">
@@ -45,16 +55,18 @@ export default function WeekView() {
         days={days}
         occurrencesByDate={occurrencesByDate}
         categoriesById={categoriesById}
+        subjectsById={subjectsById}
         dayStartHour={settings.dayStartHour}
         dayEndHour={settings.dayEndHour}
         slotMinutes={settings.slotMinutes}
         onSlotClick={(date, startMinutes) =>
           setModalState({ mode: "create", initial: { date, startMinutes, durationMinutes: 60 } })
         }
-        onEventClick={(occurrence) => setModalState({ mode: "edit", occurrence })}
+        onEventClick={handleEventClick}
       />
 
       {modalState && <EventModal {...modalState} onClose={() => setModalState(null)} />}
+      {activeSuggestion && <SuggestionModal occurrence={activeSuggestion} onClose={() => setActiveSuggestion(null)} />}
     </div>
   );
 }

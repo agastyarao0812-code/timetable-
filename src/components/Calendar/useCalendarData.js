@@ -4,9 +4,10 @@ import { getOccurrencesForEvents } from "../../lib/recurrence";
 import { formatDate } from "../../lib/dateUtils";
 
 export function useCalendarData(days) {
-  const { events, categories } = usePlannerState();
+  const { events, categories, subjects } = usePlannerState();
 
   const categoriesById = useMemo(() => Object.fromEntries(categories.map((c) => [c.id, c])), [categories]);
+  const subjectsById = useMemo(() => Object.fromEntries(subjects.map((s) => [s.id, s])), [subjects]);
 
   const occurrencesByDate = useMemo(() => {
     if (!days.length) return {};
@@ -20,5 +21,5 @@ export function useCalendarData(days) {
     return map;
   }, [events, days]);
 
-  return { categoriesById, occurrencesByDate, days: days.map(formatDate) };
+  return { categoriesById, subjectsById, occurrencesByDate, days: days.map(formatDate) };
 }

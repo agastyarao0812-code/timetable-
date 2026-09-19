@@ -7,10 +7,11 @@ import Modal from "../shared/Modal";
 const DURATION_PRESETS = [30, 60, 90, 120];
 
 export default function EventModal({ mode, initial, occurrence, onClose }) {
-  const { categories } = usePlannerState();
+  const { categories, subjects } = usePlannerState();
   const actions = usePlannerActions();
 
   const baseEvent = mode === "edit" ? occurrence.event : null;
+  const linkedSubject = baseEvent?.subjectId ? subjects.find((s) => s.id === baseEvent.subjectId) : null;
 
   const [title, setTitle] = useState(baseEvent?.title || "");
   const [categoryId, setCategoryId] = useState(baseEvent?.categoryId || initial?.categoryId || categories[0]?.id);
@@ -58,7 +59,7 @@ export default function EventModal({ mode, initial, occurrence, onClose }) {
     } else {
       actions.updateEvent(baseEvent.id, {
         title: title.trim() || "Untitled",
-        categoryId,
+        categoryId: linkedSubject ? baseEvent.categoryId : categoryId,
         date,
         startMinutes,
         durationMinutes: Number(duration),
@@ -89,16 +90,23 @@ export default function EventModal({ mode, initial, occurrence, onClose }) {
           <input value={title} onChange={(e) => setTitle(e.target.value)} disabled={isLocked} placeholder="e.g. Linear Algebra lecture" />
         </label>
 
-        <label>
-          Category
-          <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} disabled={isLocked}>
-            {categories.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-        </label>
+        {linkedSubject ? (
+          <div className="suggestion-subject">
+            <span className="subject-dot" style={{ background: linkedSubject.color }} />
+            {linkedSubject.name} (revision block)
+          </div>
+        ) : (
+          <label>
+            Category
+            <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} disabled={isLocked}>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
 
         <div className="form-row">
           <label>

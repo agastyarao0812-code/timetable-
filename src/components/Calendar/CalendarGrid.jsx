@@ -9,6 +9,7 @@ export default function CalendarGrid({
   days,
   occurrencesByDate,
   categoriesById,
+  subjectsById = {},
   dayStartHour,
   dayEndHour,
   slotMinutes,
@@ -76,7 +77,9 @@ export default function CalendarGrid({
                 />
               ))}
               {occs.map((occ) => {
+                const subject = occ.event.subjectId ? subjectsById[occ.event.subjectId] : null;
                 const cat = categoriesById[occ.event.categoryId];
+                const color = subject?.color || cat?.color || "#8f97a8";
                 const top = ((occ.startMinutes - dayStartMinutes) / slotMinutes) * ROW_HEIGHT;
                 const height = Math.max((occ.durationMinutes / slotMinutes) * ROW_HEIGHT - 2, 16);
                 const widthPct = 100 / occ.columnCount;
@@ -90,7 +93,7 @@ export default function CalendarGrid({
                       height,
                       left: `${occ.col * widthPct}%`,
                       width: `calc(${widthPct}% - 3px)`,
-                      "--evt-color": cat?.color || "#8f97a8",
+                      "--evt-color": color,
                     }}
                     onClick={(e) => {
                       e.stopPropagation();

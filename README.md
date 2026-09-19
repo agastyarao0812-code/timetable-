@@ -8,7 +8,7 @@ This project is being built in stages. Current status:
 
 - [x] Stage 1: Weekly calendar + Today view, fixed events, recurring events
 - [x] Stage 2: Deadlines list + reminders
-- [ ] Stage 3: Revision planner (subjects, auto-suggested study blocks)
+- [x] Stage 3: Revision planner (subjects, auto-suggested study blocks)
 - [ ] Stage 4: Exercise/personal targets, daily suggestions, checklist
 - [ ] Stage 5: Outlook sync, JSON export/import, theming polish, GitHub Pages deploy
 
@@ -54,6 +54,28 @@ Then open the URL it prints (usually http://localhost:5173).
   then get an OS-level notification when a deadline is 3 days out, 1 day
   out, and on the due date itself (checked on load and every 30 minutes
   while a tab stays open).
+
+## What to test right now (Stage 3)
+
+- Add one or more subjects from the Deadlines tab, with a weekly study-hour
+  target, and give them a deadline (exam/assignment).
+- Go to the **Planner** tab. You'll see, per subject: hours logged + hours
+  already scheduled vs. your weekly target, days until its nearest deadline,
+  and a progress bar.
+- Use **Log study hours** to record hours you actually studied on a given
+  day (defaults to today) — this counts toward the weekly target.
+- Click **Suggest study blocks** to auto-generate suggested study sessions
+  for the visible week. It only uses genuinely free time (skips anything
+  that overlaps a fixed event or an already-accepted block), and gives
+  subjects with the closest deadline first pick of the best slots each
+  round, so no single subject can eat the whole week.
+- Suggestions show up both in the Planner list and directly on the
+  Today/Week calendars as dashed, subject-colored blocks. From either
+  place you can **Accept** (turns it into a real event), **Save move**
+  (adjust date/time/duration while keeping it a suggestion), or
+  **Delete** (reject it).
+- Re-running **Suggest study blocks** replaces that week's un-accepted
+  suggestions with a fresh batch — already-accepted blocks are left alone.
 
 ## Building for production
 
