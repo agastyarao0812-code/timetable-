@@ -24,6 +24,12 @@ when you explicitly export a backup or sync from Outlook.
   week with no exercise or rest time scheduled.
 - **Checklist** — tasks you can tick off, optionally linked to an upcoming
   calendar event, with a "done this week" count and a day streak.
+- **Flashcards** — upload or type flashcards into decks, then revise them
+  with a spaced-repetition study mode (a simplified SM-2 algorithm, the
+  same family Anki uses) that reschedules each card based on how well you
+  knew it, so you spend more time on the cards you're about to forget.
+  Tracks per-deck progress (new/learning/review/mastered counts, cards due
+  today) and an overall review streak.
 - **Outlook sync** — pull your Outlook calendar in as read-only busy time
   the planner schedules around (see [Outlook sync](#outlook-calendar-sync)
   below for how, and its limits).
@@ -118,6 +124,7 @@ src/
     Deadlines/  deadlines + subjects
     Planner/    revision planner, suggestions, exercise/personal targets
     Checklist/  tasks + progress
+    Flashcards/ decks, cards, upload/import, spaced-repetition study mode
     Suggestions/ rule-based daily tips
     Settings/   theme, backup, Outlook sync
     Banner/     in-app due-soon banners

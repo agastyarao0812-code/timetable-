@@ -5,6 +5,7 @@ import WeekView from "./components/Calendar/WeekView";
 import DeadlinesView from "./components/Deadlines/DeadlinesView";
 import PlannerView from "./components/Planner/PlannerView";
 import ChecklistView from "./components/Checklist/ChecklistView";
+import FlashcardsView from "./components/Flashcards/FlashcardsView";
 import SettingsView from "./components/Settings/SettingsView";
 import DeadlineBanner from "./components/Banner/DeadlineBanner";
 import { checkAndNotify } from "./lib/notifications";
@@ -15,6 +16,7 @@ const TABS = [
   { id: "deadlines", label: "Deadlines" },
   { id: "planner", label: "Planner" },
   { id: "checklist", label: "Checklist" },
+  { id: "flashcards", label: "Flashcards" },
   { id: "settings", label: "Settings" },
 ];
 
@@ -63,6 +65,7 @@ export default function App() {
         {tab === "deadlines" && <DeadlinesView />}
         {tab === "planner" && <PlannerView />}
         {tab === "checklist" && <ChecklistView />}
+        {tab === "flashcards" && <FlashcardsView />}
         {tab === "settings" && <SettingsView />}
       </main>
     </div>

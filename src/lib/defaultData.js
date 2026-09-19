@@ -1,7 +1,24 @@
 import { makeId } from "./id";
+import { initCardProgress } from "./spacedRepetition";
 
 export const STORAGE_KEY = "planner-data-v1";
 export const SCHEMA_VERSION = 1;
+
+// Palette auto-assigned to new flashcard decks, cycling.
+export const DECK_PALETTE = [
+  "#6b9ff2",
+  "#c96bd6",
+  "#4caf7d",
+  "#f2b134",
+  "#f26d6d",
+  "#3fb8c4",
+  "#9f6bf2",
+  "#e0954f",
+];
+
+export function nextDeckColor(existingDecks) {
+  return DECK_PALETTE[existingDecks.length % DECK_PALETTE.length];
+}
 
 // Fixed-event categories (editable colors, not deletable core set but user can add more).
 export const DEFAULT_CATEGORIES = [
@@ -57,6 +74,32 @@ export function createDefaultData() {
       personal: { perWeek: 1, durationMinutes: 120, categoryId: "cat-personal" },
     },
     checklist: [],
+    decks: [],
+    cards: [],
+    flashcardReviewLog: {}, // date string -> number of reviews done that day
+  };
+}
+
+export function makeDeck(partial) {
+  return {
+    id: makeId(),
+    name: "",
+    description: "",
+    color: "#6b9ff2",
+    createdAt: Date.now(),
+    ...partial,
+  };
+}
+
+export function makeCard(partial) {
+  return {
+    id: makeId(),
+    deckId: null,
+    front: "",
+    back: "",
+    createdAt: Date.now(),
+    ...initCardProgress(),
+    ...partial,
   };
 }
 

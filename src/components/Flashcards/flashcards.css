@@ -1,0 +1,275 @@
+.deck-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.deck-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--deck-color, var(--accent));
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.deck-card:hover {
+  background: var(--surface-raised);
+}
+
+.deck-card-name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.deck-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  min-height: 1em;
+}
+
+.deck-card-stats {
+  display: flex;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+}
+
+.deck-card-due {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.deck-card-due-zero {
+  color: var(--success);
+}
+
+.deck-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.deck-detail-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.deck-detail-title h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.deck-detail-desc {
+  margin: 0 0 4px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.card-row-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text);
+  padding: 0;
+}
+
+.card-row-front {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.card-row-back {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.card-row-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.status-pill {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-new {
+  background: color-mix(in srgb, var(--text-dim) 20%, transparent);
+  color: var(--text-dim);
+}
+
+.status-learning {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  color: var(--accent);
+}
+
+.status-review {
+  background: color-mix(in srgb, #e0954f 20%, transparent);
+  color: #e0954f;
+}
+
+.status-mastered {
+  background: color-mix(in srgb, var(--success) 20%, transparent);
+  color: var(--success);
+}
+
+/* Study session */
+.study-session {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 0;
+}
+
+.study-progress {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.study-progress-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border-subtle);
+  overflow: hidden;
+}
+
+.study-progress-fill {
+  height: 100%;
+  background: var(--accent);
+}
+
+.study-card {
+  width: 100%;
+  max-width: 480px;
+  min-height: 220px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.study-card-back {
+  border-color: var(--accent);
+}
+
+.study-card-hint {
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.study-ratings {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.rating-btn {
+  flex: 1;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #fff;
+}
+
+.rating-again {
+  background: var(--danger);
+}
+
+.rating-hard {
+  background: #e0954f;
+}
+
+.rating-good {
+  background: var(--accent);
+}
+
+.rating-easy {
+  background: var(--success);
+}
+
+.rating-btn:hover {
+  filter: brightness(1.08);
+}
+
+.study-summary {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+.import-textarea {
+  min-height: 160px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+}
+
+.import-hint {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+.import-preview {
+  font-size: 0.82rem;
+  color: var(--text);
+}

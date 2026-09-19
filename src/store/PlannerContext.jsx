@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useReducer } from "react";
 import { loadData, saveData } from "../lib/storage";
 import { makeId } from "../lib/id";
+import { todayStr } from "../lib/dateUtils";
+import { initCardProgress, scheduleReview } from "../lib/spacedRepetition";
 
 const PlannerStateContext = createContext(null);
 const PlannerDispatchContext = createContext(null);
@@ -93,6 +95,43 @@ function reducer(state, action) {
     case "DELETE_TASK":
       return { ...state, checklist: state.checklist.filter((t) => t.id !== action.id) };
 
+    case "ADD_DECK":
+      return { ...state, decks: [...state.decks, action.deck] };
+    case "UPDATE_DECK":
+      return {
+        ...state,
+        decks: state.decks.map((d) => (d.id === action.id ? { ...d, ...action.patch } : d)),
+      };
+    case "DELETE_DECK":
+      return {
+        ...state,
+        decks: state.decks.filter((d) => d.id !== action.id),
+        cards: state.cards.filter((c) => c.deckId !== action.id),
+      };
+
+    case "ADD_CARD":
+      return { ...state, cards: [...state.cards, action.card] };
+    case "ADD_CARDS_BULK":
+      return { ...state, cards: [...state.cards, ...action.cards] };
+    case "UPDATE_CARD":
+      return {
+        ...state,
+        cards: state.cards.map((c) => (c.id === action.id ? { ...c, ...action.patch } : c)),
+      };
+    case "DELETE_CARD":
+      return { ...state, cards: state.cards.filter((c) => c.id !== action.id) };
+    case "REVIEW_CARD": {
+      const today = todayStr();
+      return {
+        ...state,
+        cards: state.cards.map((c) => (c.id === action.id ? { ...c, ...action.patch } : c)),
+        flashcardReviewLog: {
+          ...state.flashcardReviewLog,
+          [today]: (state.flashcardReviewLog[today] || 0) + 1,
+        },
+      };
+    }
+
     default:
       throw new Error(`Unknown action type: ${action.type}`);
   }
@@ -158,6 +197,25 @@ export function usePlannerActions() {
       addTask: (task) => dispatch({ type: "ADD_TASK", task: { id: makeId(), done: false, createdAt: Date.now(), ...task } }),
       updateTask: (id, patch) => dispatch({ type: "UPDATE_TASK", id, patch }),
       deleteTask: (id) => dispatch({ type: "DELETE_TASK", id }),
+
+      addDeck: (deck) => {
+        const id = makeId();
+        dispatch({ type: "ADD_DECK", deck: { id, createdAt: Date.now(), ...deck } });
+        return id;
+      },
+      updateDeck: (id, patch) => dispatch({ type: "UPDATE_DECK", id, patch }),
+      deleteDeck: (id) => dispatch({ type: "DELETE_DECK", id }),
+
+      addCard: (card) =>
+        dispatch({ type: "ADD_CARD", card: { id: makeId(), createdAt: Date.now(), ...initCardProgress(), ...card } }),
+      addCardsBulk: (cards) =>
+        dispatch({
+          type: "ADD_CARDS_BULK",
+          cards: cards.map((c) => ({ id: makeId(), createdAt: Date.now(), ...initCardProgress(), ...c })),
+        }),
+      updateCard: (id, patch) => dispatch({ type: "UPDATE_CARD", id, patch }),
+      deleteCard: (id) => dispatch({ type: "DELETE_CARD", id }),
+      reviewCard: (card, rating) => dispatch({ type: "REVIEW_CARD", id: card.id, patch: scheduleReview(card, rating) }),
     }),
     [dispatch]
   );
