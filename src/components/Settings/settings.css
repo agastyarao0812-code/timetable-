@@ -1,0 +1,28 @@
+.theme-options {
+  display: flex;
+  gap: 8px;
+}
+
+.settings-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sync-status {
+  font-size: 0.84rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border-subtle);
+}
+
+.sync-error {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+}
+
+.sync-ok {
+  color: var(--success);
+  border-color: color-mix(in srgb, var(--success) 40%, transparent);
+}

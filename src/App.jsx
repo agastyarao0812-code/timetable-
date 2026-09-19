@@ -5,6 +5,7 @@ import WeekView from "./components/Calendar/WeekView";
 import DeadlinesView from "./components/Deadlines/DeadlinesView";
 import PlannerView from "./components/Planner/PlannerView";
 import ChecklistView from "./components/Checklist/ChecklistView";
+import SettingsView from "./components/Settings/SettingsView";
 import DeadlineBanner from "./components/Banner/DeadlineBanner";
 import { checkAndNotify } from "./lib/notifications";
 
@@ -14,6 +15,7 @@ const TABS = [
   { id: "deadlines", label: "Deadlines" },
   { id: "planner", label: "Planner" },
   { id: "checklist", label: "Checklist" },
+  { id: "settings", label: "Settings" },
 ];
 
 const NOTIFICATION_CHECK_INTERVAL_MS = 30 * 60 * 1000;
@@ -24,7 +26,8 @@ export default function App() {
   const [tab, setTab] = useState("today");
 
   const toggleTheme = () => {
-    actions.updateSettings({ theme: settings.theme === "dark" ? "light" : "dark" });
+    const effectiveDark = settings.theme === "dark" || (settings.theme === "system" && window.matchMedia?.("(prefers-color-scheme: dark)").matches);
+    actions.updateSettings({ theme: effectiveDark ? "light" : "dark" });
   };
 
   useEffect(() => {
@@ -37,7 +40,7 @@ export default function App() {
   }, [deadlines, settings.notificationsEnabled, settings.notifiedKeys]);
 
   return (
-    <div className="app-shell" data-theme={settings.theme}>
+    <div className="app-shell" data-theme={settings.theme === "system" ? undefined : settings.theme}>
       <header className="app-header">
         <div className="app-title">Planner</div>
         <nav className="app-nav">
@@ -48,7 +51,7 @@ export default function App() {
           ))}
         </nav>
         <button className="btn-ghost theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
-          {settings.theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+          {settings.theme === "light" ? "🌙 Dark" : "☀️ Light"}
         </button>
       </header>
 
@@ -60,6 +63,7 @@ export default function App() {
         {tab === "deadlines" && <DeadlinesView />}
         {tab === "planner" && <PlannerView />}
         {tab === "checklist" && <ChecklistView />}
+        {tab === "settings" && <SettingsView />}
       </main>
     </div>
   );

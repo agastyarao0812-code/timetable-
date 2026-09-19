@@ -1,18 +1,36 @@
 # Planner
 
-A personal schedule and revision planner for students. Weekly calendar,
-revision planning around deadlines, exercise/personal-time targets, and a
-checklist — all stored locally in your browser (no backend, no accounts).
+A personal schedule and revision planner for students: a weekly calendar,
+a revision planner that suggests study blocks around your fixed
+commitments, exercise/personal-time targets, deadline reminders,
+rule-based daily tips, and a checklist. Everything runs entirely in your
+browser — no backend, no account, no data leaving your machine except
+when you explicitly export a backup or sync from Outlook.
 
-This project is being built in stages. Current status:
+## Features
 
-- [x] Stage 1: Weekly calendar + Today view, fixed events, recurring events
-- [x] Stage 2: Deadlines list + reminders
-- [x] Stage 3: Revision planner (subjects, auto-suggested study blocks)
-- [x] Stage 4: Exercise/personal targets, daily suggestions, checklist
-- [ ] Stage 5: Outlook sync, JSON export/import, theming polish, GitHub Pages deploy
+- **Calendar** — Today and Week views, with fixed events (lectures, work,
+  social, other) that can repeat weekly on chosen weekdays.
+- **Deadlines** — assignments and exams per subject, with dismissible
+  in-app "due soon" banners and optional browser notifications.
+- **Revision planner** — set a weekly study-hour target per subject, log
+  hours actually studied, and get auto-suggested study blocks that fit
+  your genuinely free time, prioritizing subjects with closer deadlines.
+  Suggestions can be accepted, moved, or deleted.
+- **Exercise & personal time** — weekly targets (e.g. 3 workouts, 1 free
+  evening) tracked the same way, with a quick-add shortcut.
+- **Daily tips** — a small rule-based panel on the Today view flags things
+  like an overloaded day, a deadline with too little time planned, or a
+  week with no exercise or rest time scheduled.
+- **Checklist** — tasks you can tick off, optionally linked to an upcoming
+  calendar event, with a "done this week" count and a day streak.
+- **Outlook sync** — pull your Outlook calendar in as read-only busy time
+  the planner schedules around (see [Outlook sync](#outlook-calendar-sync)
+  below for how, and its limits).
+- **Dark / light / system theme**, mobile-friendly layout, and JSON
+  export/import for backups.
 
-## Running it locally
+## Getting started
 
 Requires [Node.js](https://nodejs.org/) 18+.
 
@@ -21,79 +39,97 @@ npm install
 npm run dev
 ```
 
-Then open the URL it prints (usually http://localhost:5173).
+Open the URL it prints (usually http://localhost:5173). All data is saved
+automatically to your browser's `localStorage` as you use the app — there's
+nothing to configure to get started.
 
-## What to test right now (Stage 1)
-
-- Switch between the **Today** and **Week** tabs.
-- Click any empty slot on the grid to add an event (title, category, date,
-  start time, duration).
-- Tick **Repeats weekly** and pick one or more weekdays to create a
-  recurring event — it will appear on every matching day from its start
-  date onward.
-- Click an existing event to edit it. For recurring events you can:
-  - change the whole series,
-  - check **Only change this occurrence** to move/resize just one instance,
-  - delete just one occurrence, or delete the whole series.
-- Toggle dark/light mode with the button in the top-right.
-- Refresh the page — everything is saved automatically to your browser's
-  local storage.
-
-## What to test right now (Stage 2)
-
-- Go to the **Deadlines** tab.
-- Click **+ Subject** to add a subject (name, color, and a target study
-  hours/week — the hours field will be used once the revision planner
-  lands in Stage 3). Click an existing subject chip to edit or delete it.
-- Click **+ Add deadline** to add an assignment or exam: title, type,
-  subject, due date, notes. Click a row to edit or delete it.
-- Deadlines due today or within the next few days get a colored "due
-  soon" badge, and show up as a dismissible banner at the top of every
-  tab. Dismissing a banner hides it for the rest of the day.
-- Click **Enable notifications** and allow the browser prompt — you'll
-  then get an OS-level notification when a deadline is 3 days out, 1 day
-  out, and on the due date itself (checked on load and every 30 minutes
-  while a tab stays open).
-
-## What to test right now (Stage 3)
-
-- Add one or more subjects from the Deadlines tab, with a weekly study-hour
-  target, and give them a deadline (exam/assignment).
-- Go to the **Planner** tab. You'll see, per subject: hours logged + hours
-  already scheduled vs. your weekly target, days until its nearest deadline,
-  and a progress bar.
-- Use **Log study hours** to record hours you actually studied on a given
-  day (defaults to today) — this counts toward the weekly target.
-- Click **Suggest study blocks** to auto-generate suggested study sessions
-  for the visible week. It only uses genuinely free time (skips anything
-  that overlaps a fixed event or an already-accepted block), and gives
-  subjects with the closest deadline first pick of the best slots each
-  round, so no single subject can eat the whole week.
-- Suggestions show up both in the Planner list and directly on the
-  Today/Week calendars as dashed, subject-colored blocks. From either
-  place you can **Accept** (turns it into a real event), **Save move**
-  (adjust date/time/duration while keeping it a suggestion), or
-  **Delete** (reject it).
-- Re-running **Suggest study blocks** replaces that week's un-accepted
-  suggestions with a fresh batch — already-accepted blocks are left alone.
-
-## What to test right now (Stage 4)
-
-- On the **Planner** tab, use **Edit targets** to set weekly exercise and
-  personal/rest-time goals (how many times a week, how long each). Use
-  **+ Quick add** to schedule one in directly — it opens the normal event
-  form pre-filled with the right category and duration.
-- On the **Today** tab, check the **Today's tips** panel — it flags things
-  like an overloaded day, a deadline with too little time planned, or
-  missing exercise/rest time this week, based on simple rules over your
-  actual data (no AI involved).
-- On the **Checklist** tab, add tasks (optionally with a due date and a
-  link to an upcoming calendar event), tick them off, and watch the
-  "done this week" count and day streak update.
-
-## Building for production
+### Building for production
 
 ```bash
-npm run build
+npm run build     # outputs to dist/
 npm run preview   # serve the production build locally to sanity-check it
 ```
+
+## Data & backups
+
+Everything lives in this browser's `localStorage` under one key. That means:
+
+- Your data doesn't sync between devices or browsers on its own.
+- Clearing site data / browser storage will erase it.
+- Go to **Settings → Backup & restore** to export a JSON snapshot of
+  everything (events, subjects, deadlines, checklist, settings) or import
+  one back in. Importing **replaces** all current data, so export first if
+  you want to keep what's there.
+
+## Outlook calendar sync
+
+Since this app has no backend, Outlook sync works by importing an
+**ICS (iCalendar)** feed rather than logging into Microsoft:
+
+1. In Outlook, use **Share calendar → Publish a calendar** (or the
+   equivalent "Publish to web" flow) to get an ICS link.
+2. In this app, go to **Settings → Outlook calendar sync**, paste that URL,
+   and click **Sync now**.
+3. Most Outlook publish links don't allow the browser to fetch them
+   directly (a CORS restriction Outlook's server applies, not something
+   this app can bypass without a backend). If that happens you'll see a
+   clear error — just download the `.ics` file from that same Outlook link
+   in a new tab and either **upload the file** or **paste its contents**
+   into the box below; both use the same importer.
+
+Imported events show up as locked, read-only blocks on the calendar (you
+can't edit or delete them individually — re-sync to refresh, which
+replaces the previous Outlook import). The revision planner schedules
+study suggestions around them like any other busy time.
+
+**Limitations:** the ICS parser supports simple weekly/daily recurring
+events and one-off events, UTC (`Z`) times, and all-day events. It doesn't
+resolve named time zones (`TZID=...`) — those are treated as local
+wall-clock time — and it doesn't support recurrence exceptions (`EXDATE`)
+or non-weekly/daily recurrence rules (e.g. monthly). This covers the
+common case of a recurring class/work schedule plus one-off meetings; more
+exotic recurring events may need to be added manually.
+
+## Deploying to GitHub Pages
+
+A workflow at `.github/workflows/deploy.yml` builds and deploys the app on
+every push to `main` (or `claude/student-schedule-planner-ail0ar`, the
+branch this was developed on). To turn it on:
+
+1. In the repo, go to **Settings → Pages** and set **Source** to
+   **GitHub Actions**.
+2. Push to one of the branches above (or run the workflow manually from
+   the **Actions** tab).
+3. The deployed URL will be shown in the workflow run and under
+   **Settings → Pages** once it finishes.
+
+`vite.config.js` sets the build's base path to `/timetable-/` to match a
+GitHub Pages project site for this repo; `npm run dev` still runs at the
+root locally.
+
+## Project structure
+
+```
+src/
+  lib/          date/recurrence/scheduler/ICS-parsing logic, no React
+  store/        localStorage-backed React context + reducer
+  components/
+    Calendar/   Today/Week grid, event create/edit
+    Deadlines/  deadlines + subjects
+    Planner/    revision planner, suggestions, exercise/personal targets
+    Checklist/  tasks + progress
+    Suggestions/ rule-based daily tips
+    Settings/   theme, backup, Outlook sync
+    Banner/     in-app due-soon banners
+```
+
+## Development history
+
+Built in stages, each committed separately:
+
+1. Calendar core — Today/Week views, fixed and recurring events
+2. Deadlines list, subjects, and reminders (banners + browser notifications)
+3. Revision planner — subject hour targets, study logging, auto-suggested
+   study blocks
+4. Exercise/personal targets, rule-based daily tips, checklist
+5. Outlook sync, JSON export/import, theming, GitHub Pages deploy

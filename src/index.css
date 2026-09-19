@@ -8,6 +8,27 @@
   --text-dim: #9098b0;
   --accent: #6d8dfa;
   --accent-contrast: #0f1117;
+  --today-tint: rgba(109, 141, 250, 0.07);
+  --danger: #e0637a;
+  --success: #4caf7d;
+}
+
+/* "Match system" theme: no data-theme attribute is set, so follow the OS preference. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --surface-raised: #ffffff;
+    --border: #dfe2ec;
+    --border-subtle: #ecedf4;
+    --text: #1c1f2a;
+    --text-dim: #6b7086;
+    --accent: #3a5fe0;
+    --accent-contrast: #ffffff;
+    --today-tint: rgba(58, 95, 224, 0.06);
+    --danger: #c73b57;
+    --success: #2f8f5b;
+  }
 }
 
 * {
