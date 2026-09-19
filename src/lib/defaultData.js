@@ -44,6 +44,9 @@ export function createDefaultData() {
       notificationsEnabled: false,
       outlookIcsUrl: "",
       lastOutlookSync: null,
+      bannerThresholdDays: 3,
+      dismissedBanners: {},
+      notifiedKeys: [],
     },
     categories: DEFAULT_CATEGORIES,
     events: [],
@@ -54,6 +57,29 @@ export function createDefaultData() {
       personal: { perWeek: 1, durationMinutes: 120, categoryId: "cat-personal" },
     },
     checklist: [],
+  };
+}
+
+export function makeDeadline(partial) {
+  return {
+    id: makeId(),
+    title: "",
+    subjectId: null,
+    type: "assignment", // 'assignment' | 'exam' | 'other'
+    dueDate: "",
+    notes: "",
+    ...partial,
+  };
+}
+
+export function makeSubject(partial) {
+  return {
+    id: makeId(),
+    name: "",
+    color: "#6b9ff2",
+    hoursPerWeek: 0,
+    studyLog: {},
+    ...partial,
   };
 }
 

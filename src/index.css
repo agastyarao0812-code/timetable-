@@ -297,6 +297,18 @@ button {
   color: var(--accent-contrast);
 }
 
+.color-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.color-swatch-active {
+  border-color: var(--text);
+}
+
 @media (max-width: 640px) {
   .app-main {
     padding: 10px 8px 30px;

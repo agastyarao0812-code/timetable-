@@ -1,21 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePlannerActions, usePlannerState } from "./store/PlannerContext";
 import TodayView from "./components/Calendar/TodayView";
 import WeekView from "./components/Calendar/WeekView";
+import DeadlinesView from "./components/Deadlines/DeadlinesView";
+import DeadlineBanner from "./components/Banner/DeadlineBanner";
+import { checkAndNotify } from "./lib/notifications";
 
 const TABS = [
   { id: "today", label: "Today" },
   { id: "week", label: "Week" },
+  { id: "deadlines", label: "Deadlines" },
 ];
 
+const NOTIFICATION_CHECK_INTERVAL_MS = 30 * 60 * 1000;
+
 export default function App() {
-  const { settings } = usePlannerState();
+  const { settings, deadlines } = usePlannerState();
   const actions = usePlannerActions();
   const [tab, setTab] = useState("today");
 
   const toggleTheme = () => {
     actions.updateSettings({ theme: settings.theme === "dark" ? "light" : "dark" });
   };
+
+  useEffect(() => {
+    checkAndNotify(deadlines, settings, actions.updateSettings);
+    const interval = setInterval(() => {
+      checkAndNotify(deadlines, settings, actions.updateSettings);
+    }, NOTIFICATION_CHECK_INTERVAL_MS);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deadlines, settings.notificationsEnabled, settings.notifiedKeys]);
 
   return (
     <div className="app-shell" data-theme={settings.theme}>
@@ -33,9 +48,12 @@ export default function App() {
         </button>
       </header>
 
+      <DeadlineBanner />
+
       <main className="app-main">
         {tab === "today" && <TodayView />}
         {tab === "week" && <WeekView />}
+        {tab === "deadlines" && <DeadlinesView />}
       </main>
     </div>
   );

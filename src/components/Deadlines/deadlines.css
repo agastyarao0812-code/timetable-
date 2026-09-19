@@ -1,0 +1,130 @@
+.subjects-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.subject-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+
+.subject-chip:hover {
+  border-color: var(--chip-color);
+}
+
+.subject-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.notify-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.86rem;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+}
+
+.empty-hint {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.deadline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.deadline-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+}
+
+.deadline-row:hover {
+  border-color: var(--border);
+}
+
+.deadline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.deadline-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.deadline-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.deadline-meta {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.deadline-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badge-overdue,
+.badge-today {
+  background: color-mix(in srgb, var(--danger) 18%, transparent);
+  color: var(--danger);
+}
+
+.badge-soon {
+  background: color-mix(in srgb, #e0954f 18%, transparent);
+  color: #e0954f;
+}
+
+.badge-upcoming {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--accent);
+}
+
+.badge-later {
+  background: var(--border-subtle);
+  color: var(--text-dim);
+}
+
+.urgency-overdue {
+  border-left: 3px solid var(--danger);
+}
